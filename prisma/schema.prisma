@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(uuid()) @map("_id") @db.ObjectId
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
   username       String   @unique
   email          String   @unique
   nebulae        Int      @default(0)
@@ -40,7 +40,7 @@ model User {
 }
 
 model Galaxy {
-  id        String   @id @default(uuid()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   image     String?
   createdAt DateTime @default(now())
@@ -58,7 +58,7 @@ model Galaxy {
 }
 
 model Post {
-  id        String   @id @default(uuid()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String
   content   String
   likes     Int      @default(0)
@@ -87,7 +87,7 @@ model Post {
 }
 
 model Comment {
-  id        String   @id @default(uuid()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   content   String
   likes     Int      @default(0)
   dislikes  Int      @default(0)

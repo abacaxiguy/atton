@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input[type="password"] {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
