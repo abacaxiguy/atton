@@ -84,7 +84,9 @@ export default function Login() {
 
                                 <Input id="email" label="Email" type="email" register={register} />
                                 <Input id="password" label="Password" type="password" register={register} />
-                                <Button text={formType === "login" ? "Sign in" : "Sign up"} size="px-36 h-12 text-xl" primary />
+                                <Button size="px-36 h-12 text-xl" primary>
+                                    {formType === "login" ? "Sign in" : "Sign up"}{" "}
+                                </Button>
 
                                 <div className="flex justify-center items-center">
                                     <span className="text-gray-400">{formType === "login" ? "Don't have an account?" : "Already have an account?"}</span>

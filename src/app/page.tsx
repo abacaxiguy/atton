@@ -17,7 +17,7 @@ export default function Home() {
         if (session?.status === "authenticated") {
             router.push("/home");
         }
-    });
+    }, [session, router]);
 
     return (
         <main className="flex min-h-screen overflow-hidden">
@@ -40,10 +40,14 @@ export default function Home() {
                         <span className="text-2xl text-primary-500">Start exploring now!</span>
                         <div className="flex flex-col mt-2 gap-3 font-light">
                             <Link href="/login?type=register">
-                                <Button text="Create an account" size="px-36 h-16 text-2xl" primary />
+                                <Button size="px-36 h-16 text-2xl" primary>
+                                    Create an account
+                                </Button>
                             </Link>
                             <Link href="/login?type=login">
-                                <Button text="Sign in to your account" size="px-36 h-16 text-2xl" secondary />
+                                <Button size="px-36 h-16 text-2xl" secondary>
+                                    Sign in to your account
+                                </Button>
                             </Link>
                         </div>
                     </div>
