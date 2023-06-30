@@ -39,9 +39,9 @@ export default function Login() {
                     <h1 className="text-4xl text-primary-500">{formType === "login" ? "Sign in into your account" : "Create your Atton account"}</h1>
                     <form onSubmit={handleSubmit(onSubmit)} className="max-w-md w-full">
                         <div className="flex flex-col mt-8 gap-4">
-                            {formType === "register" && <Input id="email" label="Email" type="email" register={register} />}
+                            {formType === "register" && <Input id="username" label="Username" register={register} />}
 
-                            <Input id="username" label="Username" register={register} />
+                            <Input id="email" label="Email" type="email" register={register} />
                             <Input id="password" label="Password" type="password" register={register} />
                             <Button text="Login" size="px-36 h-12 text-xl" primary />
 

@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid()) @map("_id") @db.ObjectId
+  username       String   @unique
+  email          String   @unique
+  nebulae        Int      @default(0)
+  pfp            String?
+  hashedPassword String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  galaxies  Galaxy[] @relation("SubscribedGalaxies", fields: [galaxyIds], references: [id])
+  galaxyIds String[] @db.ObjectId
+
+  myGalaxies Galaxy[]  @relation("OwnedGalaxies")
+  posts      Post[]    @relation("OwnedPosts")
+  comments   Comment[]
+
+  saved    Post[]   @relation("SavedPosts", fields: [savedIds], references: [id])
+  savedIds String[] @db.ObjectId
+
+  liked    Post[]   @relation("LikedPosts", fields: [likedIds], references: [id])
+  likedIds String[] @db.ObjectId
+
+  disliked    Post[]   @relation("DislikedPosts", fields: [dislikedIds], references: [id])
+  dislikedIds String[] @db.ObjectId
+
+  @@map("users")
+}
+
+model Galaxy {
+  id        String   @id @default(uuid()) @map("_id") @db.ObjectId
+  name      String
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts Post[]
+
+  members   User[]   @relation("SubscribedGalaxies", fields: [memberIds], references: [id])
+  memberIds String[] @db.ObjectId
+
+  owner   User   @relation("OwnedGalaxies", fields: [ownerId], references: [id])
+  ownerId String @db.ObjectId
+
+  @@map("galaxies")
+}
+
+model Post {
+  id        String   @id @default(uuid()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  likes     Int      @default(0)
+  dislikes  Int      @default(0)
+  images    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author   User   @relation("OwnedPosts", fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+
+  saved    User[]   @relation("SavedPosts", fields: [savedIds], references: [id])
+  savedIds String[] @db.ObjectId
+
+  liked    User[]   @relation("LikedPosts", fields: [likedIds], references: [id])
+  likedIds String[] @db.ObjectId
+
+  disliked    User[]   @relation("DislikedPosts", fields: [dislikedIds], references: [id])
+  dislikedIds String[] @db.ObjectId
+
+  comments Comment[]
+  Galaxy   Galaxy?   @relation(fields: [galaxyId], references: [id])
+  galaxyId String?   @db.ObjectId
+
+  @@map("posts")
+}
+
+model Comment {
+  id        String   @id @default(uuid()) @map("_id") @db.ObjectId
+  content   String
+  likes     Int      @default(0)
+  dislikes  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String @db.ObjectId
+
+  fatherId String?   @db.ObjectId
+  father   Comment?  @relation("Replies", fields: [fatherId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies  Comment[] @relation("Replies")
+
+  @@map("comments")
+}
