@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import Button from "@/components/Button";
 import { IoLogoGithub } from "react-icons/io5";
 
 export default function Home() {
@@ -21,8 +22,8 @@ export default function Home() {
                     <div className="flex flex-col justify-center items-center mt-14">
                         <span className="text-2xl text-primary-500">Start exploring now!</span>
                         <div className="flex flex-col mt-2 gap-3 font-light">
-                            <button className="bg-primary-500 hover:brightness-90 transition px-36 h-16 text-2xl rounded-full text-white">Create an account</button>
-                            <button className="bg-gray-300 text-gray-500 hover:brightness-90 transition px-36 h-16 text-2xl rounded-full">Sign in to your account</button>
+                            <Button text="Create an account" size="px-36 h-16 text-2xl" primary />
+                            <Button text="Sign in to your account" size="px-36 h-16 text-2xl" secondary />
                         </div>
                     </div>
                     <div className="flex flex-col mt-24 gap-4 items-center text-gray-500">
