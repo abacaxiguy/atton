@@ -30,6 +30,27 @@ export async function POST(request: Request) {
             },
         });
 
+        await prisma.user.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                galaxies: {
+                    connect: {
+                        id: galaxy.id,
+                    },
+                },
+                myGalaxies: {
+                    connect: {
+                        id: galaxy.id,
+                    },
+                },
+                nebulae: {
+                    increment: 10,
+                },
+            },
+        });
+
         return NextResponse.json(galaxy, { status: 201 });
     } catch (error: any) {
         return new NextResponse("Server error, please try again", { status: 500 });

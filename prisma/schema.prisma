@@ -23,9 +23,11 @@ model User {
   galaxies  Galaxy[] @relation("SubscribedGalaxies", fields: [galaxyIds], references: [id])
   galaxyIds String[] @db.ObjectId
 
-  myGalaxies Galaxy[]  @relation("OwnedGalaxies")
-  posts      Post[]    @relation("OwnedPosts")
-  comments   Comment[]
+  myGalaxies  Galaxy[] @relation("OwnedGalaxies")
+  myGalaxyIds String[] @db.ObjectId
+
+  posts    Post[]    @relation("OwnedPosts")
+  comments Comment[]
 
   saved    Post[]   @relation("SavedPosts", fields: [savedIds], references: [id])
   savedIds String[] @db.ObjectId
@@ -41,9 +43,9 @@ model User {
 
 model Galaxy {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
+  name        String   @unique
   description String?
-  image       String?
+  image       String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -62,14 +64,15 @@ model Post {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String
   content   String
-  likes     Int      @default(0)
-  dislikes  Int      @default(0)
   images    String[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   author   User   @relation("OwnedPosts", fields: [authorId], references: [id])
   authorId String @db.ObjectId
+
+  galaxy   Galaxy @relation(fields: [galaxyId], references: [id])
+  galaxyId String @db.ObjectId
 
   saved    User[]   @relation("SavedPosts", fields: [savedIds], references: [id])
   savedIds String[] @db.ObjectId
@@ -81,8 +84,6 @@ model Post {
   dislikedIds String[] @db.ObjectId
 
   comments Comment[]
-  Galaxy   Galaxy?   @relation(fields: [galaxyId], references: [id])
-  galaxyId String?   @db.ObjectId
 
   @@map("posts")
 }
