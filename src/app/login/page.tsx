@@ -84,7 +84,7 @@ export default function Login() {
 
                                 <Input id="email" label="Email" type="email" register={register} />
                                 <Input id="password" label="Password" type="password" register={register} />
-                                <Button size="px-36 h-12 text-xl" primary>
+                                <Button type="submit" size="px-36 h-12 text-xl" primary>
                                     {formType === "login" ? "Sign in" : "Sign up"}{" "}
                                 </Button>
 
