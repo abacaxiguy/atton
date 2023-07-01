@@ -56,6 +56,10 @@ export default function Login() {
                 .post("/api/register", data)
                 .then(() => {
                     toast.success("Account created successfully");
+                    signIn("credentials", {
+                        ...data,
+                        redirect: false,
+                    });
                 })
                 .catch((err) => {
                     toast.error(err.response.data);
