@@ -45,6 +45,7 @@ export default function NewGalaxy({ setGalaxies }: NewGalaxyProps) {
                 console.log(err);
             });
     };
+
     return (
         <main className="flex px-28">
             <div className="">
